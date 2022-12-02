@@ -13,18 +13,15 @@ def elfReferee(realmove, cheatmove):
     roundScore = [gameScoreDictionary[cheatmove]]
     if (gameScoreDictionary[realmove] == gameScoreDictionary[cheatmove]):
         roundScore.append(3)
-
-    def win():
-        roundScore.append(6)
-
+        
     match realmove:
         case "A": 
-            if (cheatmove == "Y"): win()
+            if (cheatmove == "Y"): roundScore.append(6)
         case "B": 
-            if (cheatmove == "Z"): win()
+            if (cheatmove == "Z"): roundScore.append(6)
         case "C": 
-            if (cheatmove == "X"): win()
-    print(realmove, cheatmove, sum(roundScore))
+            if (cheatmove == "X"): roundScore.append(6)
+
     return sum(roundScore);
 
 allTheMoves = []
@@ -39,33 +36,28 @@ print(sum(allTheMoves))
 # Part 2
 newStrategyScore = []
 
-def decideOutcome(mymove):
+def newScore(mymove, increment):
+    score = gameScoreDictionary[mymove] + increment
+    if (score < 1):
+        score = 3
+    if (score > 3):
+        score = 1
     match mymove:
         case "X": 
-            return 0
+            return 0 + score
         case "Y": 
-            return 3
+            return 3 + score
         case "Z": 
-            return 6
+            return 6 + score
 
 def newElfReferee(elfmove, mymove):
-    roundScore = []
     match elfmove:
         case "A": 
-            if (mymove == "X"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["Z"])
-            if (mymove == "Y"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["X"])
-            if (mymove == "Z"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["Y"])
+            return newScore(mymove, -1);
         case "B": 
-            if (mymove == "X"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["X"])
-            if (mymove == "Y"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["Y"])
-            if (mymove == "Z"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["Z"])
+            return newScore(mymove, 0);
         case "C": 
-            if (mymove == "X"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["Y"])
-            if (mymove == "Y"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["Z"])
-            if (mymove == "Z"): roundScore.append(decideOutcome(mymove) + gameScoreDictionary["X"])
-
-    print(elfmove, mymove, sum(roundScore))
-    return sum(roundScore);
+            return newScore(mymove, 1);
 
 for move in cheatBook: 
     if len(move) > 0:
