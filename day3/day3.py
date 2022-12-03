@@ -14,3 +14,12 @@ for items in rucksacks:
     
 # Day 1 
 print(sum(overlappingRucksackItems))
+
+elfGroups = [rucksacks[i:i+3] for i in range(0, len(rucksacks), 3)]
+elfBadges = []
+for rucksacks in elfGroups:
+    elfBadge = rucksackDictionary[''.join(set.intersection(*map(set, rucksacks)))]
+    elfBadges.append(elfBadge)
+    
+# Part 2
+print(sum(elfBadges))
