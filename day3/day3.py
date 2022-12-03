@@ -12,5 +12,5 @@ for items in rucksacks:
     overlappingItem = rucksackDictionary[''.join(set(firstCompartment).intersection(secondCompartment))]
     overlappingRucksackItems.append(overlappingItem)
     
-# Day 1
+# Day 1 
 print(sum(overlappingRucksackItems))
